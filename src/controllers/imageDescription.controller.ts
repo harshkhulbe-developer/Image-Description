@@ -20,29 +20,26 @@ export class ImageDescriptionController {
             existingImageDescriptions.forEach(existingImageDescription => {
                 if (existingImageDescription && existingImageDescription.description && existingImageDescription.heading
                     && existingImageDescription.description.length + existingImageDescription.heading.length >= 500 
-                    && existingImageDescription.description.length <= 1500) {
+                    && existingImageDescription.description.length + existingImageDescription.heading.length  <= 1500) {
 
                     existingImageDescriptionsCount++; 
                 }
             });
 
-            // Check if the new description length is between 500 and 1500 characters
             if (description.length + heading.length >= 500) {
-                // Check if adding the new description would exceed the limit of 3 entries on the page
                 if (existingImageDescriptionsCount >= 3) {
                     return res.status(400).json({
                         message: "Cannot add more than 3 entries to the page because you are adding the entry greater than or equal to 500 characters"
                     });
                 }
             } else {
-                // Check if adding the new description would exceed the limit of 4 entries on the page
                 if (existingImageDescriptionsCount >= 4) {
                     return res.status(400).json({
                         message: "Cannot add more than 4 entries to the page because maximum 4 entries allowed",
                     });
                 }
             }
-
+            
             const newImageDescription = new ImageDescription({
                 pageNo,
                 image:imageUrl,
