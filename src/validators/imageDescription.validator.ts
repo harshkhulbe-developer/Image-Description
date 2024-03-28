@@ -3,8 +3,10 @@ import * as Joi from "joi";
 export class ImageDescriptionValidation{
     static async createImageDescription(req:any,res:any,next:any){
        const schema=Joi.object().keys({
+        pageNo:Joi.number(),
+        image:Joi.optional(),
         heading:Joi.string().required(),
-        description:Joi.string().required().min(500).max(1500),
+        description:Joi.string().required().max(1500),
        })
 
 
